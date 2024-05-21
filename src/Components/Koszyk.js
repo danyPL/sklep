@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { KoszykContext } from './KoszykProvider';
 
 const Koszyk = () => {
-  const { koszyk, deleteItem } = useContext(KoszykContext);
+  const { koszyk, deleteItem, suma } = useContext(KoszykContext);
 
   return (
     <div className='container'>
@@ -26,11 +26,19 @@ const Koszyk = () => {
                 <td>{e.name}</td>
                 <td>{e.price}zł</td>
                 <td>{e.ilosc}</td>
-                <td>{e.totalprice}</td>
+                <td>{e.totalprice}zł</td>
                 <button className='btn btn-danger mb-1' onClick={() => deleteItem(e.id)}>Usuń</button>
               </tr>
             ))
           }
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Suma:</td>
+            <td>{suma}zł</td>
+            <td></td>
+          </tr>
         </tbody>
       </table>
     </div>
