@@ -2,12 +2,21 @@ import React, { useContext } from 'react';
 import { KoszykContext } from './KoszykProvider';
 
 const Koszyk = () => {
-  const { koszyk, deleteItem, suma } = useContext(KoszykContext);
+  const { koszyk, deleteItem, changeCount, suma } = useContext(KoszykContext);
+
+  const handleIloscChange = (id, e) => {
+    const newIlosc = parseInt(e.target.value, 10);
+    if (newIlosc > 0) {
+      changeCount(id, newIlosc);
+    } else {
+      alert("Ilość musi być większa niż 0");
+    }
+  };
 
   return (
     <div className='container'>
       <h1>Zawartość koszyka</h1>
-      <table class="table">
+      <table className="table">
         <thead>
           <tr>
             <th scope="col">Lp.</th>
@@ -19,18 +28,25 @@ const Koszyk = () => {
           </tr>
         </thead>
         <tbody>
-          {
-            koszyk.map((e, i) => (
-              <tr key={i}>
-                <th scope='row'>{e.id}</th>
-                <td>{e.name}</td>
-                <td>{e.price}zł</td>
-                <td>{e.ilosc}</td>
-                <td>{e.totalprice}zł</td>
+          {koszyk.map((e, i) => (
+            <tr key={i}>
+              <th scope='row'>{e.id}</th>
+              <td>{e.name}</td>
+              <td>{e.price}zł</td>
+              <td>
+                <input 
+                  type="number" 
+                  value={e.ilosc} 
+                  onChange={(ev) => handleIloscChange(e.id, ev)} 
+                  min="1"
+                />
+              </td>
+              <td>{e.totalprice}zł</td>
+              <td>
                 <button className='btn btn-danger mb-1' onClick={() => deleteItem(e.id)}>Usuń</button>
-              </tr>
-            ))
-          }
+              </td>
+            </tr>
+          ))}
           <tr>
             <td></td>
             <td></td>
